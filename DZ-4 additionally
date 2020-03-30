@@ -1,0 +1,151 @@
+using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        //FindAndRaplaceFiveChar();
+
+        //DeleteChars();
+
+        //ArrayMultiplation();
+
+        TransposedMatrix();
+
+        Console.Read();
+    }
+
+    static void FindAndRaplaceFiveChar()
+    {
+        string sentence = "Нет ничего глупее желания всегда быть умнее всех";
+        string sentence_new = "";
+
+        int count = 0;
+        bool b = false;
+
+        for (int i = 0; i < sentence.Length - 1; i++)
+        {
+            if (sentence[i] != ' ')
+            {
+                if (count >= 5 & b == false)
+                {
+                    sentence_new = sentence_new + "...";
+                    // после того как нашли длинное слово, сразу переходим к след. пробелу
+                    i = sentence.IndexOf(' ', i);
+                    b = true;
+                }
+                else
+                    sentence_new = sentence_new + sentence[i];
+                count++;
+            }
+            else
+            {
+                count = 0;
+                sentence_new = sentence_new + sentence[i];
+                b = false;
+            }
+
+        }
+
+        Console.WriteLine(sentence_new);
+    }
+
+    static void DeleteChars()
+    {
+        string str = "VR#Y##HELO#LO";
+        Console.WriteLine("Исходная строка: " + str);
+        string str_new = "";
+        for (int i = str.Length - 1; i > 0; i--)
+        {
+            if (str[i] != '#')
+            {
+                str_new = str[i] + str_new;
+            }
+            else
+            {
+                int j = i;
+                while(str[j] == '#') j--;
+                str = str.Remove(j+1, 1);
+                str = str.Remove(j, 1);
+                i--;
+            }
+        }
+        Console.WriteLine("Результат: " + str);
+    }
+
+    static void ArrayMultiplation()
+    {
+        int[,] arr_a = { { 1, -1 }, { 2, 0 }, { 3, 0 } };
+        int rows_arr_a = arr_a.GetUpperBound(0) + 1;
+        int colums_arr_a = arr_a.Length / rows_arr_a;
+
+        int[,] arr_b = { { 1, 1 }, { 2, 0 } };
+        int rows_arr_b = arr_b.GetUpperBound(0) + 1;
+        int colums_arr_b = arr_b.Length / rows_arr_a;
+
+        if (colums_arr_a != rows_arr_b)
+        {
+            Console.WriteLine("Умножение массивов невозможно");
+            return;
+        }
+
+        int[,] arr_c = new int[rows_arr_a, colums_arr_b + 1];
+
+        for (int row_a = 0; row_a < rows_arr_a; row_a++)
+        {
+            for (int row_b = 0; row_b < rows_arr_b; row_b++)
+            {
+                for (int column_a = 0; column_a < colums_arr_a; column_a++)
+                {
+                    arr_c[row_a, row_b] += arr_a[row_a, column_a] * arr_b[column_a, row_b];      
+                }
+            }
+        }
+
+        //Вывод массива С
+        int rows_arr_с = arr_c.GetUpperBound(0) + 1;
+        int colums_arr_с = arr_c.Length / rows_arr_a;
+        for (int i = 0; i < rows_arr_с; i++)
+        {
+            for (int j = 0; j < colums_arr_с; j++)
+            {
+                Console.Write("" + arr_c[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    static void TransposedMatrix()
+    {
+        int[,] arr_a = { { 1, 2 }, { 3, 4 }, { 5, 6 } };
+   
+        int rows_arr_a = arr_a.GetUpperBound(0) + 1;
+        int colums_arr_a = arr_a.Length / rows_arr_a;
+
+        //Вывод массива a
+        for (int i = 0; i < rows_arr_a; i++)
+        {
+            for (int j = 0; j < colums_arr_a; j++)
+            {
+                Console.Write("" + arr_a[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        Console.WriteLine("\nВывод результата\n");
+
+        int[,] arr_c = new int[colums_arr_a, rows_arr_a];
+
+        for (int column = 0; column < colums_arr_a; column++)
+        {
+            for (int row = 0; row < rows_arr_a; row++)
+            {
+                arr_c[column, row] = arr_a[row, column];
+                Console.Write("" + arr_c[column, row] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        
+    }
+}
